@@ -11,12 +11,15 @@
 
 .section .text
 .extern kernel_main
+.extern callConstructors
 .global loader
 
 loader:
     # stack pointer is not set at the start of bootloader, (.cpp needs stack pointer set)
     # manually set stack pointer to kernel stack
     mov $kernel_stack ,%esp 
+    # to initialise global/static objects
+    call callConstructors
     # saving multiboot_structure and magic_number given by bootloader on stack
     push %eax
     push %ebx

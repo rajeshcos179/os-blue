@@ -25,7 +25,8 @@ includes section named multiboot, sections that starts with text and read-only d
 	}
 
 /*
-initialised data section : 
+initialised data section :
+has constructor functions
 set start_ctors symbol to current counter value
 includes all elements of .init_array
 includes all elements of .init_array.* sections sorted by their priority value

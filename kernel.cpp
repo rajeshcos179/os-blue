@@ -51,6 +51,19 @@ void printf(char *str)
     }
 }
 
+// to initialise global/static objects
+typedef void (*constructor)();
+extern "C" constructor start_ctors;
+extern "C" constructor end_ctors;
+// iterates through range of constructor function ptrs and calls each constructor
+extern "C" void callConstructors()
+{
+    for (constructor *i = &start_ctors; i != &end_ctors; i++)
+    {
+        (*i)();
+    }
+}
+
 // extern "C" - to prevent name mangling and ensuring it can be called from assembly code
 extern "C" void kernel_main(void *multiboot_structure, uint32_t magic_number)
 {
