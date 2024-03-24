@@ -5,7 +5,7 @@ ASPARAMS = --32
 #linker produce ELF files for 32 bit intel architecture
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o
+objects = loader.o gdt.o port.o kernel.o
 
 #target ($@) : prerequisite ($<)
 
@@ -46,3 +46,10 @@ run : mykernel.iso
 	(killall VirtualBoxVM && sleep 1) || true
 	VirtualBoxVM --startvm "os-blue" &
 
+quit :
+	killall VirtualBoxVM
+
+#execute target regardless
+.PHONY: clean
+clean:
+	rm -f $(objects) mykernel.bin mykernel.iso
